@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CETI Zacarias de Góis - Liceu Piauiense</title>
+  <style>
+    /* Estilos Gerais */
+    :root {
+      --cor-principal: #651f27;
+      --cor-secundaria: #a52f3a;
+      --cor-texto-escuro: #333;
+    }
+
+    html {
+      scroll-behavior: smooth; /* Garante a rolagem suave em toda a página */
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f2f5; /* Cor de fundo neutra */
+      color: var(--cor-texto-escuro); /* Cor de texto padrão para o corpo */
+      animation: fadeInPage 0.7s ease-in-out;
+    }
+
+    @keyframes fadeInPage {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Cabeçalho */
+    header {
+      background: rgba(101, 31, 39, 0.95); /* var(--cor-principal) com opacidade */
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 40px;
+      flex-wrap: wrap;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo-img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      box-shadow: 0px 2px 8px rgba(0,0,0,0.5);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.4em;
+    }
+
+    .menu-topo {
+      display: flex;
+      gap: 20px;
+    }
+
+    .menu-topo a {
+      text-decoration: none;
+      color: var(--cor-principal);
+      font-weight: bold;
+      background: #fff;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    .menu-topo a:hover {
+      background: #ffcccc;
+    }
+
+    /* Navegação */
+    nav {
+      background: rgba(165, 47, 58, 0.95); /* var(--cor-secundaria) com opacidade */
+      display: flex;
+      justify-content: center;
+      padding: 12px;
+      position: relative; /* Para o menu hambúrguer */
+    }
+
+    .nav-links a {
+      color: var(--cor-secundaria);
+      background: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 8px 14px;
+      border-radius: 6px;
+      transition: 0.3s;
+    }
+
+    .nav-links a:hover {
+      background: #ffcccc;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    /* Banner Slider */
+    .slider-container {
+      position: relative;
+      width: 100%;
+      height: 50vh; /* 50% da altura da tela */
+      max-height: 450px;
+      overflow: hidden;
+      background-color: #000;
+    }
+
+    .slider-container .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1s ease-in-out; /* Transição suave controlada por JS */
+    }
+
+    .slider-container .slide.active {
+      opacity: 1; /* Torna o slide ativo visível */
+    }
+
+    .slider-container .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Botões do Slider */
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      cursor: pointer;
+      padding: 10px 15px;
+      font-size: 24px;
+      font-weight: bold;
+      z-index: 10;
+      transition: background-color 0.3s;
+    }
+    .slider-btn:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+    .prev-btn {
+      left: 10px;
+    }
+    .next-btn {
+      right: 10px;
+    }
+    /* Seção de Conteúdo Principal (Fundo Branco) */
+    .main-content {
+      background-color: #fff;
+      color: var(--cor-texto-escuro);
+      padding: 40px 20px;
+      margin: 40px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .titulo-secao {
+      text-align: center;
+      font-size: 2.5em;
+      margin-bottom: 40px;
+      color: var(--cor-principal);
+    }
+
+    .secao-historia {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    /* Inverte a ordem para variar o layout */
+    .secao-historia:nth-child(odd) {
+      flex-direction: row-reverse;
+    }
+
+    .secao-historia .texto {
+      max-width: 600px;
+    }
+
+    .secao-historia .texto h3 {
+      margin-top: 0;
+      border-bottom: 2px solid var(--cor-secundaria);
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+      color: var(--cor-principal);
+    }
+
+    .secao-historia .texto p {
+      text-align: justify;
+      line-height: 1.6em;
+    }
+
+    .secao-historia .imagem-destaque {
+      max-width: 320px;
+      width: 100%;
+      border-radius: 12px;
+      border: 4px solid var(--cor-principal);
+      box-shadow: 0px 2px 12px rgba(0,0,0,0.3);
+    }
+
+    /* Seção Pessoas Importantes */
+    .ilustres-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Grid responsivo */
+      gap: 25px;
+      margin-top: 20px;
+    }
+
+    .ilustre-card {
+      background-color: #f9f9f9;
+      border: 1px solid #eee;
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .ilustre-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+
+    .ilustre-card img {
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      margin-bottom: 15px;
+      border: 3px solid var(--cor-secundaria);
+    }
+
+    .ilustre-card h4 {
+      margin: 0 0 5px 0;
+      color: var(--cor-principal);
+    }
+
+     /* Rodapé */
+    footer {
+      background: var(--cor-principal);
+      color: white;
+      padding: 30px 20px;
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 15px;
+    }
+
+    .footer-logo {
+      height: 60px;
+      border-radius: 50%;
+    }
+
+    .footer-info p {
+      margin: 5px 0;
+      font-size: 0.9em;
+    }
+
+    .footer-info a {
+      color: #ffdddd;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .footer-info a:hover { text-decoration: underline; }
+
+    /* Responsividade */
+    @media (max-width: 900px) {
+      .secao-historia,
+      .secao-historia:nth-child(odd) {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+        text-align: center;
+      }
+      .nav-links {
+        flex-wrap: wrap; /* Permite que os links quebrem a linha */
+        justify-content: center; /* Centraliza os links */
+        padding: 10px 0;
+        gap: 10px; /* Espaçamento menor no mobile */
+      }
+      nav {
+        justify-content: center; /* Centraliza a barra de navegação */
+        padding: 5px 20px; /* Ajusta o padding */
+      }
+      .main-content {
+        margin: 20px;
+        padding: 30px 15px;
+      }
+      .ilustre-card {
+        /* Garante que o card não fique muito pequeno em telas estreitas */
+        min-width: 150px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cabeçalho -->
+  <header>
+    <div class="logo-area">
+      <img src="https://pbs.twimg.com/profile_images/1632861219/logo_400x400.png" alt="Logo CETI" class="logo-img">
+      <h1>CETI ZACARIAS DE GÓIS<br><small>LICEU PIAUIENSE</small></h1>
+    </div>
+    <div class="menu-topo">
+      <a href="https://wa.me/558694139461">CONTATO</a>
+      <a href="https://www.google.com/maps/place/Ceti+Zacarias+De+Gois/@-5.0860717,-42.8174775,19.04z/data=!4m6!3m5!1s0x78e3912385f8adb:0x6454b7672147e66!8m2!3d-5.0865276!4d-42.8174456!16s%2Fg%2F11fkljzbsk?entry=ttu&g_ep=EgoyMDI1MDkxNi4wIKXMDSoASAFQAw%3D%3D">LOCALIZAÇÃO</a>
+    </div>
+  </header>
+
+  <!-- Menu -->
+  <nav>
+    <div class="nav-links">
+      <a href="index.html">INÍCIO</a>
+      <a href="#historia">HISTÓRIA</a>
+      <a href="#pessoas-importantes">PESSOAS IMPORTANTES</a>
+      <a href="novidades.html">NOVIDADES</a>
+      <a href="tour.html">TOUR VIRTUAL</a>
+      <a href="cardapio.html">CARDÁPIO</a>
+    </div>
+  </nav>
+
+  <!-- Banner Rotativo -->
+  <div class="slider-container">
+    <div class="slide active"><img src="https://180graus.com/180graus/media/image_bank/2022/10/liceu-piauiense_-8022422177240140589.jpg.800x0_q85_crop.jpg" alt="Fachada atual do Liceu Piauiense"></div>
+    <div class="slide"><img src="https://s2.glbimg.com/BtmnV7c0Zv289lYv2jtpi9GCgGQ=/1200x/smart/filters:cover():strip_icc()/s.glbimg.com/jo/g1/f/original/2013/08/16/img_1470.jpg" alt="Alunos do Liceu Piauiense"></div>
+    <div class="slide"><img src="https://2.bp.blogspot.com/-amRdIpejL-c/Vc_IZWpRbYI/AAAAAAAAEQ8/RNA2BMFsCmA/s1600/liceu%2Bantigo.jpg" alt="Prédio antigo do Liceu em Oeiras"></div>
+    <button class="slider-btn prev-btn">&lt;</button>
+    <button class="slider-btn next-btn">&gt;</button>
+  </div>
+
+  <!-- Conteúdo Principal com fundo branco -->
+  <main class="main-content" id="historia">
+    <h2 class="titulo-secao">📖 História do Liceu Piauiense</h2>
+
+    <!-- Seção: Fundação -->
+    <section class="secao-historia">
+      <div class="texto">
+        <h3>📜 Fundação e Primeiros Anos</h3>
+        <p>
+          O Liceu Piauiense foi fundado em 4 de outubro de 1845, durante o período imperial brasileiro,
+          pelo então presidente da província, Zacarias de Góis, por meio da resolução número 189.
+          Inicialmente denominado Liceu Provincial, estava sediado em Oeiras, que era a capital
+          da província do Piauí na época.
+        </p>
+      </div>
+      <img src="https://2.bp.blogspot.com/-amRdIpejL-c/Vc_IZWpRbYI/AAAAAAAAEQ8/RNA2BMFsCmA/s1600/liceu%2Bantigo.jpg" alt="Prédio antigo do Liceu em Oeiras" class="imagem-destaque">
+    </section>
+
+    <!-- Seção: Transferência -->
+    <section class="secao-historia">
+      <div class="texto">
+        <h3>🏛️ Transferência para Teresina</h3>
+        <p>
+          Em 1853, com a mudança da capital para Teresina, o Liceu Provincial foi transferido e renomeado para
+          Liceu Piauiense. Desde então, tem desempenhado um papel fundamental na educação do estado.
+          Em 3 de maio de 1934, o Liceu Piauiense foi instalado no edifício atual, localizado no centro de Teresina.
+        </p>
+      </div>
+      <img src="https://180graus.com/180graus/media/image_bank/2022/10/liceu-piauiense_-8022422177240140589.jpg.800x0_q85_crop.jpg" alt="Fachada atual do Liceu Piauiense" class="imagem-destaque">
+    </section>
+
+    <!-- Seção: Fundador -->
+    <section class="secao-historia">
+      <div class="texto">
+        <h3>👤 O Fundador: Zacarias de Góis</h3>
+        <p>
+          Zacarias de Góis e Vasconcelos foi o presidente da província do Piauí durante o período imperial brasileiro e é o responsável pela fundação do Liceu Piauiense em 4 de outubro de 1845. Ele criou a escola com o objetivo de oferecer ensino secundário de qualidade no estado, contribuindo para a educação e a formação de diversas gerações de piauienses. Por sua importância, o Liceu acabou sendo rebatizado em sua homenagem como Colégio Estadual Zacarias de Góis.
+        </p>
+      </div>
+      <img src="https://neamp.pucsp.br/images/fotos/zacarias-de-gois-e-vasconcellos.jpg" alt="Zacarias de Góis e Vasconcelos" class="imagem-destaque">
+    </section>
+
+    <!-- Seção: Figuras Ilustres -->
+    <section id="pessoas-importantes">
+      <h2 class="titulo-secao">🌟 Pessoas Importantes</h2>
+      <div class="ilustres-container">
+        <!-- Card 1 -->
+        <div class="ilustre-card">
+          <img src="http://pm1.narvii.com/7002/2ca5486b1af086ad5aa95c7c93af2908b8958dd3r1-450-450v2_uhq.jpg" alt="Humberto Castelo Branco">
+          <h4>Humberto Castelo Branco</h4>
+        </div>
+        <!-- Card 2 -->
+        <div class="ilustre-card">
+          <img src="https://www.camara.leg.br/internet/deputado/bandep/130428.jpgmaior.jpg" alt="Demerval Lobão">
+          <h4>Demerval Lobão</h4>
+        </div>
+        <!-- Card 3 -->
+        <div class="ilustre-card">
+          <img src="https://www.academiapiauiensedeletras.org.br/wp-content/uploads/elementor/thumbs/s01-2-r1buqls35in5c0fzp1lxljdclz3pqudymk3gi56hag.webp" alt="Wilson de Andrade Brandão">
+          <h4>Wilson de Andrade Brandão</h4>
+        </div>
+        <!-- Card 4 -->
+        <div class="ilustre-card">
+          <img src="https://www.gp1.com.br/media/images/2017/07/03/wellington-dias_GR6BppZ.jpg" alt="Wellington Dias">
+          <h4>Wellington Dias</h4>
+        </div>
+        <!-- Card 5 -->
+        <div class="ilustre-card">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Antonio_de_Almendra_Freitas_Neto_em_2014.JPG/500px-Antonio_de_Almendra_Freitas_Neto_em_2014.JPG?20140906160355" alt="Freitas Neto">
+          <h4>Freitas Neto</h4>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Rodapé -->
+  <footer>
+    <img src="https://pbs.twimg.com/profile_images/1632861219/logo_400x400.png" alt="Logo CETI" class="footer-logo">
+    <div class="footer-info">
+      <p>&copy; 2024 CETI Zacarias de Góis - Liceu Piauiense. Todos os direitos reservados.</p>
+      <a href="https://www.instagram.com/colegiozacariasdegois/" target="_blank">@colegiozacariasdegois</a>
+      <p style="margin-top: 15px; opacity: 0.7;">Feito por um aluno</p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Lógica do Slider
+      const slides = document.querySelectorAll('.slider-container .slide');
+      const nextBtn = document.querySelector('.next-btn');
+      const prevBtn = document.querySelector('.prev-btn');
+      const sliderContainer = document.querySelector('.slider-container');
+      let currentSlide = 0;
+
+      function showSlide(index) {
+        slides.forEach((slide, i) => {
+          slide.classList.remove('active');
+          if (i === index) {
+            slide.classList.add('active');
+          }
+        });
+      }
+
+      function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+      }
+
+      function prevSlide() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(currentSlide);
+      }
+
+      nextBtn.addEventListener('click', nextSlide);
+      prevBtn.addEventListener('click', prevSlide);
+
+      // Inicia a troca automática de slides
+      let slideInterval = setInterval(nextSlide, 4000); // Troca a cada 4 segundos
+
+      // Pausa a animação quando o mouse está sobre o slider
+      sliderContainer.addEventListener('mouseenter', () => clearInterval(slideInterval));
+
+      // Retoma a animação quando o mouse sai do slider
+      sliderContainer.addEventListener('mouseleave', () => {
+        slideInterval = setInterval(nextSlide, 4000); // Reinicia o intervalo
+      });
+    });
+  </script>
+</body>
+</html>

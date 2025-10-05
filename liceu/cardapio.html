@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cardápio - CETI Zacarias de Góis</title>
+  <style>
+    /* Estilos Gerais (copiados do index.html para consistência) */
+    :root {
+      --cor-principal: #651f27;
+      --cor-secundaria: #a52f3a;
+      --cor-texto-escuro: #333;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f2f5;
+      color: var(--cor-texto-escuro);
+      animation: fadeInPage 0.7s ease-in-out;
+    }
+
+    @keyframes fadeInPage {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Cabeçalho */
+    header {
+      background: rgba(101, 31, 39, 0.95);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 40px;
+      flex-wrap: wrap;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo-img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      box-shadow: 0px 2px 8px rgba(0,0,0,0.5);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.4em;
+    }
+
+    .menu-topo {
+      display: flex;
+      gap: 20px;
+    }
+
+    .menu-topo a {
+      text-decoration: none;
+      color: var(--cor-principal);
+      font-weight: bold;
+      background: #fff;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    .menu-topo a:hover {
+      background: #ffcccc;
+    }
+
+    /* Navegação */
+    nav {
+      background: rgba(165, 47, 58, 0.95);
+      display: flex;
+      justify-content: center;
+      padding: 12px;
+      position: relative;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      color: var(--cor-secundaria);
+      background: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 8px 14px;
+      border-radius: 6px;
+      transition: 0.3s;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      background: #ffcccc;
+    }
+
+    /* Conteúdo Principal */
+    .main-content {
+      background-color: #fff;
+      color: var(--cor-texto-escuro);
+      padding: 40px 20px;
+      margin: 40px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .titulo-secao {
+      text-align: center;
+      font-size: 2.5em;
+      margin-bottom: 20px; /* Ajustado para dar espaço ao subtítulo */
+      color: var(--cor-principal);
+    }
+    
+    .subtitulo-secao {
+      text-align: center;
+      font-size: 1.2em;
+      color: #555;
+      margin-top: -15px;
+      margin-bottom: 40px;
+      font-weight: 500;
+    }
+
+    /* Estilos específicos para o Cardápio */
+    .cardapio-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .dia-cardapio {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 20px;
+      background-color: #fdfdfd;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .dia-cardapio h3 {
+      margin-top: 0;
+      color: var(--cor-principal);
+      border-bottom: 2px solid var(--cor-secundaria);
+      padding-bottom: 10px;
+      text-align: center;
+    }
+
+    .refeicao-item {
+      margin-bottom: 15px;
+    }
+
+    .refeicao-item h4 {
+      margin: 0 0 5px 0;
+      color: var(--cor-texto-escuro);
+      font-size: 1.1em;
+    }
+
+    .refeicao-item p {
+      margin: 0;
+      padding-left: 10px;
+      border-left: 3px solid #ccc;
+      font-style: italic;
+      color: #555;
+    }
+
+    /* Rodapé */
+    footer {
+      background: var(--cor-principal);
+      color: white;
+      padding: 30px 20px;
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 15px;
+    }
+
+    .footer-logo {
+      height: 60px;
+      border-radius: 50%;
+    }
+
+    .footer-info p {
+      margin: 5px 0;
+      font-size: 0.9em;
+    }
+
+    .footer-info a {
+      color: #ffdddd;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .footer-info a:hover { text-decoration: underline; }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+        text-align: center;
+      }
+      .nav-links {
+        flex-wrap: wrap; /* Permite que os links quebrem a linha */
+        justify-content: center; /* Centraliza os links */
+        padding: 10px 0;
+        gap: 10px; /* Espaçamento menor no mobile */
+      }
+      nav {
+        justify-content: center; /* Centraliza a barra de navegação */
+        padding: 5px 20px; /* Ajusta o padding */
+      }
+      .main-content {
+        margin: 20px;
+        padding: 30px 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cabeçalho -->
+  <header>
+    <div class="logo-area">
+      <img src="https://pbs.twimg.com/profile_images/1632861219/logo_400x400.png" alt="Logo CETI" class="logo-img">
+      <h1>CETI ZACARIAS DE GÓIS<br><small>LICEU PIAUIENSE</small></h1>
+    </div>
+    <div class="menu-topo">
+      <a href="https://wa.me/558694139461">CONTATO</a>
+      <a href="https://www.google.com/maps/place/Ceti+Zacarias+De+Gois/@-5.0860717,-42.8174775,19.04z/data=!4m6!3m5!1s0x78e3912385f8adb:0x6454b7672147e66!8m2!3d-5.0865276!4d-42.8174456!16s%2Fg%2F11fkljzbsk?entry=ttu&g_ep=EgoyMDI1MDkxNi4wIKXMDSoASAFQAw%3D%3D">LOCALIZAÇÃO</a>
+    </div>
+  </header>
+
+  <!-- Menu -->
+  <nav>
+    <div class="nav-links">
+      <a href="index.html">INÍCIO</a>
+      <a href="index.html#historia">HISTÓRIA</a>
+      <a href="index.html#pessoas-importantes">PESSOAS IMPORTANTES</a>
+      <a href="novidades.html">NOVIDADES</a>
+      <a href="tour.html">TOUR VIRTUAL</a>
+      <a href="cardapio.html" class="active">CARDÁPIO</a>
+    </div>
+  </nav>
+
+  <!-- Conteúdo Principal com fundo branco -->
+  <main class="main-content">
+    <h2 class="titulo-secao">🍽️ Cardápio da Semana</h2>
+    <p class="subtitulo-secao">Referente à semana de 05/10/2025</p>
+
+    <div class="cardapio-container">
+      <!-- Segunda-feira -->
+      <div class="dia-cardapio">
+        <h3>Segunda-feira</h3>
+        <div class="refeicao-item">
+          <h4>Lanche (10:00)</h4>
+          <p>A ser definido</p>
+        </div>
+        <div class="refeicao-item">
+          <h4>Almoço (12:20)</h4>
+          <p>A ser definido</p>
+        </div>
+        <div class="refeicao-item">
+          <h4>Lanche (17:00)</h4>
+          <p>A ser definido</p>
+        </div>
+      </div>
+
+      <!-- Terça-feira -->
+      <div class="dia-cardapio">
+        <h3>Terça-feira</h3>
+        <div class="refeicao-item">
+          <h4>Lanche (10:00)</h4>
+          <p>A ser definido</p>
+        </div>
+        <div class="refeicao-item">
+          <h4>Almoço (12:20)</h4>
+          <p>A ser definido</p>
+        </div>
+        <div class="refeicao-item">
+          <h4>Lanche (17:00)</h4>
+          <p>A ser definido</p>
+        </div>
+      </div>
+
+      <!-- Quarta-feira -->
+      <div class="dia-cardapio">
+        <h3>Quarta-feira</h3>
+        <div class="refeicao-item">
+          <h4>Lanche (10:00)</h4>
+          <p>A ser definido</p>
+        </div>
+        <div class="refeicao-item">
+          <h4>Almoço (12:20)</h4>
+          <p>A ser definido</p>
+        </div>
+        <div class="refeicao-item">
+          <h4>Lanche (17:00)</h4>
+          <p>A ser definido</p>
+        </div>
+      </div>
+
+      <!-- Quinta-feira -->
+      <div class="dia-cardapio">
+        <h3>Quinta-feira</h3>
+        <div class="refeicao-item">
+          <h4>Lanche (10:00)</h4>
+          <p>A ser definido</p>
+        </div>
+        <div class="refeicao-item">
+          <h4>Almoço (12:20)</h4>
+          <p>A ser definido</p>
+        </div>
+        <div class="refeicao-item">
+          <h4>Lanche (17:00)</h4>
+          <p>A ser definido</p>
+        </div>
+      </div>
+
+      <!-- Sexta-feira -->
+      <div class="dia-cardapio">
+        <h3>Sexta-feira</h3>
+        <div class="refeicao-item">
+          <h4>Lanche (10:00)</h4>
+          <p>A ser definido</p>
+        </div>
+        <div class="refeicao-item">
+          <h4>Almoço (12:20)</h4>
+          <p>A ser definido</p>
+        </div>
+        <div class="refeicao-item">
+          <h4>Lanche (17:00)</h4>
+          <p>A ser definido</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Rodapé -->
+  <footer>
+    <img src="https://pbs.twimg.com/profile_images/1632861219/logo_400x400.png" alt="Logo CETI" class="footer-logo">
+    <div class="footer-info">
+      <p>&copy; 2024 CETI Zacarias de Góis - Liceu Piauiense. Todos os direitos reservados.</p>
+      <a href="https://www.instagram.com/colegiozacariasdegois/" target="_blank">@colegiozacariasdegois</a>
+      <p style="margin-top: 15px; opacity: 0.7;">Feito por um aluno</p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+    });
+  </script>
+</body>
+</html>

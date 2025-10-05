@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tour Virtual - CETI Zacarias de Góis</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"/>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+  <style>
+    /* Estilos Gerais (copiados para consistência) */
+    :root {
+      --cor-principal: #651f27;
+      --cor-secundaria: #a52f3a;
+      --cor-texto-escuro: #333;
+    }
+    html, body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f2f5;
+      color: var(--cor-texto-escuro);
+      animation: fadeInPage 0.7s ease-in-out;
+    }
+    @keyframes fadeInPage {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    header {
+      background: rgba(101, 31, 39, 0.95);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 40px;
+      flex-wrap: wrap;
+    }
+    .logo-area { display: flex; align-items: center; gap: 15px; }
+    .logo-img { width: 120px; height: 120px; border-radius: 50%; border: 3px solid #fff; box-shadow: 0px 2px 8px rgba(0,0,0,0.5); }
+    header h1 { margin: 0; font-size: 22px; line-height: 1.4em; }
+    .menu-topo { display: flex; gap: 20px; }
+    .menu-topo a { text-decoration: none; color: var(--cor-principal); font-weight: bold; background: #fff; padding: 8px 16px; border-radius: 8px; transition: 0.3s; }
+    .menu-topo a:hover { background: #ffcccc; }
+    nav { background: rgba(165, 47, 58, 0.95); display: flex; justify-content: center; padding: 12px; position: relative; }
+    .nav-links { display: flex; gap: 20px; }
+    .nav-links a { color: var(--cor-secundaria); background: #fff; text-decoration: none; font-weight: bold; padding: 8px 14px; border-radius: 6px; transition: 0.3s; }
+    .nav-links a:hover, .nav-links a.active { background: #ffcccc; }
+
+    /* Estilo para o container do Tour 360 */
+    #panorama {
+      width: 100vw; /* 100% da largura da tela */
+      height: calc(100vh - 235px); /* Altura da tela menos o cabeçalho e menu */
+    }
+
+    /* Rodapé */
+    footer {
+      background: var(--cor-principal);
+      color: white;
+      padding: 30px 20px;
+      /* margin-top: 40px; */ /* Removido para o tour ocupar a tela toda */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 15px;
+    }
+    .footer-logo { height: 60px; border-radius: 50%; }
+    .footer-info p { margin: 5px 0; font-size: 0.9em; }
+    .footer-info a { color: #ffdddd; text-decoration: none; font-weight: bold; }
+    .footer-info a:hover { text-decoration: underline; }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+        text-align: center;
+      }
+      .nav-links { flex-wrap: wrap; justify-content: center; padding: 10px 0; gap: 10px; }
+      nav { justify-content: center; padding: 5px 20px; }
+      /* Ajuste de altura do tour para mobile */
+      #panorama {
+        /* A altura do cabeçalho e menu muda no mobile, então ajustamos aqui */
+        height: calc(100vh - 330px); /* Valor aproximado, pode precisar de ajuste fino */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cabeçalho -->
+  <header>
+    <div class="logo-area">
+      <img src="https://pbs.twimg.com/profile_images/1632861219/logo_400x400.png" alt="Logo CETI" class="logo-img">
+      <h1>CETI ZACARIAS DE GÓIS<br><small>LICEU PIAUIENSE</small></h1>
+    </div>
+    <div class="menu-topo">
+      <a href="https://wa.me/558694139461">CONTATO</a>
+      <a href="https://www.google.com/maps/place/Ceti+Zacarias+De+Gois/@-5.0860717,-42.8174775,19.04z/data=!4m6!3m5!1s0x78e3912385f8adb:0x6454b7672147e66!8m2!3d-5.0865276!4d-42.8174456!16s%2Fg%2F11fkljzbsk?entry=ttu&g_ep=EgoyMDI1MDkxNi4wIKXMDSoASAFQAw%3D%3D">LOCALIZAÇÃO</a>
+    </div>
+  </header>
+
+  <!-- Menu -->
+  <nav>
+    <div class="nav-links">
+      <a href="index.html">INÍCIO</a>
+      <a href="index.html#historia">HISTÓRIA</a>
+      <a href="index.html#pessoas-importantes">PESSOAS IMPORTANTES</a>
+      <a href="novidades.html">NOVIDADES</a>
+      <a href="tour.html" class="active">TOUR VIRTUAL</a>
+      <a href="cardapio.html">CARDÁPIO</a>
+    </div>
+  </nav>
+
+  <!-- Container do Tour Virtual 360 -->
+  <div id="panorama"></div>
+
+  <!-- Rodapé -->
+  <footer>
+    <img src="https://pbs.twimg.com/profile_images/1632861219/logo_400x400.png" alt="Logo CETI" class="footer-logo">
+    <div class="footer-info">
+      <p>&copy; 2024 CETI Zacarias de Góis - Liceu Piauiense. Todos os direitos reservados.</p>
+      <a href="https://www.instagram.com/colegiozacariasdegois/" target="_blank">@colegiozacariasdegois</a>
+      <p style="margin-top: 15px; opacity: 0.7;">Feito por um aluno</p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Inicia o visualizador Pannellum
+      pannellum.viewer('panorama', {
+        "default": {
+          "firstScene": "entrada",
+          "author": "Aluno do Liceu",
+          "sceneFadeDuration": 1000
+        },
+
+        "scenes": {
+          "entrada": {
+            "title": "Entrada Principal",
+            "hfov": 110, // Campo de visão
+            "pitch": -3, // Inclinação vertical
+            "yaw": 117, // Posição horizontal inicial
+            "type": "equirectangular",
+            "panorama": "https://i.postimg.cc/W3s25hJc/entrada-360-placeholder.jpg", // IMAGEM DE EXEMPLO - SUBSTITUIR
+            "hotSpots": [
+              {
+                "pitch": -2.1,
+                "yaw": 132.9,
+                "type": "scene",
+                "text": "Ir para o Pátio",
+                "sceneId": "patio"
+              }
+            ]
+          },
+
+          "patio": {
+            "title": "Pátio Interno",
+            "hfov": 110,
+            "yaw": 5,
+            "type": "equirectangular",
+            "panorama": "https://i.postimg.cc/63d2V7v7/patio-360-placeholder.jpg", // IMAGEM DE EXEMPLO - SUBSTITUIR
+            "hotSpots": [
+              {
+                "pitch": -0.6,
+                "yaw": 37.1,
+                "type": "scene",
+                "text": "Voltar para a Entrada",
+                "sceneId": "entrada",
+                "targetYaw": -23,
+                "targetPitch": 2
+              }
+            ]
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

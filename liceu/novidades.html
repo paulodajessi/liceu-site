@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Novidades - CETI Zacarias de Góis</title>
+  <style>
+    /* Estilos Gerais (copiados para consistência) */
+    :root {
+      --cor-principal: #651f27;
+      --cor-secundaria: #a52f3a;
+      --cor-texto-escuro: #333;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f2f5;
+      color: var(--cor-texto-escuro);
+      animation: fadeInPage 0.7s ease-in-out;
+    }
+    @keyframes fadeInPage {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    header {
+      background: rgba(101, 31, 39, 0.95);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 40px;
+      flex-wrap: wrap;
+    }
+    .logo-area { display: flex; align-items: center; gap: 15px; }
+    .logo-img { width: 120px; height: 120px; border-radius: 50%; border: 3px solid #fff; box-shadow: 0px 2px 8px rgba(0,0,0,0.5); }
+    header h1 { margin: 0; font-size: 22px; line-height: 1.4em; }
+    .menu-topo { display: flex; gap: 20px; }
+    .menu-topo a { text-decoration: none; color: var(--cor-principal); font-weight: bold; background: #fff; padding: 8px 16px; border-radius: 8px; transition: 0.3s; }
+    .menu-topo a:hover { background: #ffcccc; }
+    nav { background: rgba(165, 47, 58, 0.95); display: flex; justify-content: center; padding: 12px; position: relative; }
+    .nav-links { display: flex; gap: 20px; }
+    .nav-links a { color: var(--cor-secundaria); background: #fff; text-decoration: none; font-weight: bold; padding: 8px 14px; border-radius: 6px; transition: 0.3s; }
+    .nav-links a:hover, .nav-links a.active { background: #ffcccc; }
+
+    
+    /* Conteúdo Principal */
+    .main-content {
+      background-color: #fff;
+      padding: 40px 20px;
+      margin: 40px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    .titulo-secao {
+      text-align: center;
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      color: var(--cor-principal);
+    }
+    .subtitulo-secao {
+      text-align: center;
+      font-size: 1.2em;
+      color: #555;
+      margin-top: -15px;
+      margin-bottom: 40px;
+    }
+    .post-meta {
+      text-align: center;
+      color: #777;
+      font-style: italic;
+      margin-bottom: 40px;
+      margin-top: -30px;
+    }
+    .texto-noticia {
+      max-width: 800px;
+      margin: 0 auto 40px auto;
+      line-height: 1.7;
+      text-align: justify;
+    }
+
+    /* Slider de Imagens */
+    .slider-container {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto 40px auto;
+      overflow: hidden;
+      background-color: #000;
+      border-radius: 10px;
+      aspect-ratio: 16 / 9; /* Proporção para evitar colapso de altura, pode ser ajustado */
+    }
+    .slider-container .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease-in-out; }
+    .slider-container .slide.active { opacity: 1; }
+    .slider-container .slide img { width: 100%; height: 100%; object-fit: contain; }
+    .slider-btn { position: absolute; top: 50%; transform: translateY(-50%); background-color: rgba(0, 0, 0, 0.5); color: white; border: none; cursor: pointer; padding: 10px 15px; font-size: 24px; z-index: 10; transition: background-color 0.3s; }
+    .slider-btn:hover { background-color: rgba(0, 0, 0, 0.8); }
+    .prev-btn { left: 10px; }
+    .next-btn { right: 10px; }
+
+    /* Galeria de Fotos */
+    .galeria-fotos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .galeria-fotos img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: zoom-in;
+    }
+    .galeria-fotos img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+
+    /* Estilos para o Lightbox da Galeria */
+    .lightbox {
+      display: none; /* Oculto por padrão */
+      position: fixed;
+      z-index: 1000;
+      padding-top: 60px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.9);
+    }
+    .lightbox-content {
+      margin: auto;
+      display: block;
+      width: 80%;
+      max-width: 800px;
+      max-height: 85%;
+      animation: zoom 0.6s;
+    }
+    @keyframes zoom {
+      from {transform: scale(0)}
+      to {transform: scale(1)}
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 15px;
+      right: 35px;
+      color: #f1f1f1;
+      font-size: 40px;
+      font-weight: bold;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    .lightbox-close:hover, .lightbox-close:focus { color: #bbb; }
+
+    /* Link para o Álbum Completo */
+    .album-link-container {
+      text-align: center;
+      margin-top: 50px;
+      padding-top: 40px;
+      border-top: 1px solid #eee;
+    }
+    .album-link-container p {
+      margin-bottom: 15px;
+      font-size: 1.1em;
+    }
+    .album-link-btn {
+      display: inline-block;
+      padding: 12px 25px;
+      background-color: var(--cor-principal);
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 8px;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+    .album-link-btn:hover { background-color: var(--cor-secundaria); transform: translateY(-2px); }
+
+    /* Rodapé */
+    footer {
+      background: var(--cor-principal);
+      color: white;
+      padding: 30px 20px;
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 15px;
+    }
+
+    .footer-logo {
+      height: 60px;
+      border-radius: 50%;
+    }
+
+    .footer-info p {
+      margin: 5px 0;
+      font-size: 0.9em;
+    }
+
+    .footer-info a {
+      color: #ffdddd;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .footer-info a:hover { text-decoration: underline; }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+        text-align: center;
+      }
+      .nav-links {
+        flex-wrap: wrap; /* Permite que os links quebrem a linha */
+        justify-content: center; /* Centraliza os links */
+        padding: 10px 0;
+        gap: 10px; /* Espaçamento menor no mobile */
+      }
+      nav {
+        justify-content: center; /* Centraliza a barra de navegação */
+        padding: 5px 20px; /* Ajusta o padding */
+      }
+      .main-content { margin: 20px; padding: 30px 15px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cabeçalho -->
+  <header>
+    <div class="logo-area">
+      <img src="https://pbs.twimg.com/profile_images/1632861219/logo_400x400.png" alt="Logo CETI" class="logo-img">
+      <h1>CETI ZACARIAS DE GÓIS<br><small>LICEU PIAUIENSE</small></h1>
+    </div>
+    <div class="menu-topo">
+      <a href="https://wa.me/558694139461">CONTATO</a>
+      <a href="https://www.google.com/maps/place/Ceti+Zacarias+De+Gois/@-5.0860717,-42.8174775,19.04z/data=!4m6!3m5!1s0x78e3912385f8adb:0x6454b7672147e66!8m2!3d-5.0865276!4d-42.8174456!16s%2Fg%2F11fkljzbsk?entry=ttu&g_ep=EgoyMDI1MDkxNi4wIKXMDSoASAFQAw%3D%3D">LOCALIZAÇÃO</a>
+    </div>
+  </header>
+
+  <!-- Menu -->
+  <nav>
+    <div class="nav-links">
+      <a href="index.html">INÍCIO</a>
+      <a href="index.html#historia">HISTÓRIA</a>
+      <a href="index.html#pessoas-importantes">PESSOAS IMPORTANTES</a>
+      <a href="novidades.html" class="active">NOVIDADES</a>
+      <a href="tour.html">TOUR VIRTUAL</a>
+      <a href="cardapio.html">CARDÁPIO</a>
+    </div>
+  </nav>
+
+  <!-- Conteúdo da Notícia -->
+  <main class="main-content">
+    <h2 class="titulo-secao">🎉 Liceu Piauiense Comemora 180 Anos!</h2>
+    <p class="subtitulo-secao">Uma celebração histórica no Clube dos Correios marcou a data especial.</p>
+    <p class="post-meta">Publicado em Outubro de 2025</p>
+
+    <!-- Banner Rotativo da Notícia -->
+    <div class="slider-container">
+      <div class="slide active"><img src="https://i.postimg.cc/rF954z9R/cc15df40-a3fa-4b0c-a7bf-a1ccd548accd.jpg" alt="Festa de 180 anos do Liceu 1"></div>
+      <div class="slide"><img src="https://i.postimg.cc/Sxv2L9YS/e624d953-91fb-4cf6-8ab3-6d0c6ab62214.jpg" alt="Festa de 180 anos do Liceu 2"></div>
+      <div class="slide"><img src="https://i.postimg.cc/pTVJ4Rrb/16bf7405-8da1-412b-b436-04a79b630c1a.jpg" alt="Festa de 180 anos do Liceu 3"></div>
+      <button class="slider-btn prev-btn">&lt;</button>
+      <button class="slider-btn next-btn">&gt;</button>
+    </div>
+
+    <div class="texto-noticia">
+      <p>
+        Para celebrar seus 180 anos de história e contribuição para a educação no Piauí, o CETI Zacarias de Góis (Liceu Piauiense)
+        promoveu um dia inesquecível para seus alunos, professores e funcionários. A comemoração aconteceu no Clube dos Correios,
+        na zona leste de Teresina, e foi marcada por muita alegria, confraternização e atividades de lazer.
+      </p>
+      <p>
+        O evento reforça o compromisso da escola não apenas com a excelência acadêmica, mas também com o bem-estar e a integração
+        de toda a comunidade escolar. Foi um momento para celebrar o passado, viver o presente e inspirar as futuras gerações
+        que ainda passarão pelos corredores do nosso histórico Liceu.
+      </p>
+    </div>
+
+    <h3 class="titulo-secao" style="font-size: 2em; margin-top: 60px;">📸 Galeria de Fotos</h3>
+
+    <div class="galeria-fotos">
+      <img src="https://i.postimg.cc/Hnq5YgpB/2bee0503-d3dc-4cac-9baa-36b4b05bcff8.jpg" alt="Foto do evento">
+      <img src="https://i.postimg.cc/k5JSXwm3/fe0c5f37-839e-4fae-a356-cc0a1422eac1.jpg" alt="Foto do evento">
+      <img src="https://i.postimg.cc/fLFSCN07/816b364e-bf92-4f02-835e-30f85f0fa719.jpg" alt="Foto do evento">
+      <img src="https://i.postimg.cc/tRYc2QcZ/79f1d54e-d084-4406-a5db-63297efce9c9.jpg" alt="Foto do evento">
+      <img src="https://i.postimg.cc/TYnC4RJd/54f22d0b-ae30-411c-acb9-ef8aaee5b69d.jpg" alt="Foto do evento">
+      <img src="https://i.postimg.cc/YSCR0QKG/14818c0b-6e64-4c4a-bea5-7269d94ccd4a.jpg" alt="Foto do evento">
+      <img src="https://i.postimg.cc/mkCNJwM0/33b7325a-f87a-467b-9f79-3190372471df.jpg" alt="Foto do evento">
+      <img src="https://i.postimg.cc/Njg7CR0H/e7a8afe0-903c-4b81-8053-2b5c52bdffc8.jpg" alt="Foto do evento">
+      <img src="https://i.postimg.cc/j5JznX8j/e1cba065-6fd0-494e-abdc-ce032cb29b7c.jpg" alt="Foto do evento">
+      <img src="https://i.postimg.cc/qv4VmDnx/b8400d56-09b3-4847-895f-e2d9794b9357.jpg" alt="Foto do evento">
+      <img src="https://i.postimg.cc/sXtb5Tsx/f70e5128-a5f5-4541-9f54-a476f40e8e82.jpg" alt="Foto do evento">
+      <img src="https://i.postimg.cc/CLpW1rvR/67044c7a-3f92-4da3-9d61-bc341ae01e6a.jpg" alt="Foto do evento">
+      <img src="https://i.postimg.cc/Dw2HQJ37/2512eed0-1e30-4967-99e3-86fe8b861202.jpg" alt="Foto do evento">
+      <img src="https://i.postimg.cc/Y0Kyvjzm/a5554c4d-2e11-4102-91be-62e595b703d9.jpg" alt="Foto do evento">
+    </div>
+
+    <!-- Link para o álbum completo -->
+    <div class="album-link-container">
+      <p>Gostou? Todas as fotos do passeio estão disponíveis em nosso álbum!</p>
+      <a href="https://drive.google.com/drive/folders/15rKUUXkgX-KcQEPQsJEkrhKop9TxmN3D" target="_blank" class="album-link-btn">Ver Álbum Completo no Google Drive</a>
+    </div>
+
+  </main>
+
+  <!-- Lightbox/Modal para a Galeria -->
+  <div id="lightbox" class="lightbox">
+    <span class="lightbox-close">&times;</span>
+    <img class="lightbox-content" id="lightbox-img">
+  </div>
+
+  <!-- Rodapé -->
+  <footer>
+    <img src="https://pbs.twimg.com/profile_images/1632861219/logo_400x400.png" alt="Logo CETI" class="footer-logo">
+    <div class="footer-info">
+      <p>&copy; 2024 CETI Zacarias de Góis - Liceu Piauiense. Todos os direitos reservados.</p>
+      <a href="https://www.instagram.com/colegiozacariasdegois/" target="_blank">@colegiozacariasdegois</a>
+      <p style="margin-top: 15px; opacity: 0.7;">Feito por um aluno</p>
+    </div>
+  </footer>
+
+  <script>
+    // Script para o slider de imagens
+    document.addEventListener('DOMContentLoaded', function () {
+      // Lógica do Slider
+      const slides = document.querySelectorAll('.slider-container .slide');
+      const nextBtn = document.querySelector('.next-btn');
+      const prevBtn = document.querySelector('.prev-btn');
+      const sliderContainer = document.querySelector('.slider-container');
+      let currentSlide = 0;
+
+      function showSlide(index) {
+        slides.forEach((slide, i) => {
+          slide.classList.remove('active');
+          if (i === index) {
+            slide.classList.add('active');
+          }
+        });
+      }
+
+      function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+      }
+
+      function prevSlide() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(currentSlide);
+      }
+
+      // Verifica se existem slides antes de adicionar os eventos
+      if (slides.length > 0) {
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+
+        let slideInterval = setInterval(nextSlide, 4000);
+
+        sliderContainer.addEventListener('mouseenter', () => clearInterval(slideInterval));
+        sliderContainer.addEventListener('mouseleave', () => {
+          slideInterval = setInterval(nextSlide, 4000);
+        });
+      }
+
+      // Script para o Lightbox
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      const galleryImages = document.querySelectorAll('.galeria-fotos img');
+      const closeBtn = document.querySelector('.lightbox-close');
+
+      galleryImages.forEach(img => {
+        img.addEventListener('click', () => {
+          lightbox.style.display = 'block';
+          lightboxImg.src = img.src;
+        });
+      });
+
+      // Função para fechar o lightbox
+      const closeModal = () => lightbox.style.display = 'none';
+      closeBtn.addEventListener('click', closeModal);
+      lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeModal(); });
+    });
+  </script>
+</body>
+</html>
